@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Navbar from './components/Navbar'; // Changed from Header to Navbar
+import Navbar from './components/Navbar'; // Corrected import path
 import CreateAd from './views/CreateAd';
 import History from './views/History';
 import Profile from './views/Profile';
