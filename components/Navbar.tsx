@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeIcon, ListBulletIcon, UserIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import { HomeIcon, ListBulletIcon, UserIcon, Bars3Icon, XMarkIcon, RocketLaunchIcon } from '@heroicons/react/24/solid'; // Added RocketLaunchIcon for 'Criar' to differentiate
 import { CurrentView } from '../types';
 
 interface NavbarProps {
@@ -7,14 +7,24 @@ interface NavbarProps {
   onViewChange: (view: CurrentView) => void;
   isMobileMenuOpen: boolean;
   toggleMobileMenu: () => void;
+  onShowLandingPage: () => void; // New prop for showing the landing page
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, isMobileMenuOpen, toggleMobileMenu }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, isMobileMenuOpen, toggleMobileMenu, onShowLandingPage }) => {
   const navItems = [
-    { name: 'Criar', icon: HomeIcon, view: 'create' as CurrentView },
+    { name: 'Início', icon: HomeIcon, view: 'landing' as CurrentView }, // New 'Início' button
+    { name: 'Criar', icon: RocketLaunchIcon, view: 'create' as CurrentView }, // Using RocketLaunchIcon for 'Criar'
     { name: 'Histórico', icon: ListBulletIcon, view: 'history' as CurrentView },
     { name: 'Perfil', icon: UserIcon, view: 'profile' as CurrentView },
   ];
+
+  const handleNavigationClick = (view: CurrentView) => {
+    if (view === 'landing') {
+      onShowLandingPage();
+    } else {
+      onViewChange(view);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 z-50">
@@ -27,11 +37,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, isMobileMenu
         <nav className="hidden lg:flex space-x-8">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentView === item.view;
+            const isActive = currentView === item.view && item.view !== 'landing'; // 'Início' won't be "active" in the same way
             return (
               <button
                 key={item.view}
-                onClick={() => onViewChange(item.view)}
+                onClick={() => handleNavigationClick(item.view)}
                 className={`flex items-center p-2 text-base font-medium transition-all duration-200
                   ${isActive ? 'text-purple-600 dark:text-purple-400 active-nav-item border-b-2 border-purple-600 dark:border-purple-400' : 'text-gray-500 hover:text-purple-500 dark:text-gray-400 dark:hover:text-purple-300'}`}
               >
@@ -66,11 +76,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onViewChange, isMobileMenu
           <div className="flex flex-col items-center space-y-4">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = currentView === item.view;
+              const isActive = currentView === item.view && item.view !== 'landing';
               return (
                 <button
                   key={item.view}
-                  onClick={() => onViewChange(item.view)}
+                  onClick={() => handleNavigationClick(item.view)}
                   className={`flex items-center p-2 text-lg font-medium transition-all duration-200 w-full justify-center
                     ${isActive ? 'text-purple-600 dark:text-purple-400 active-nav-item bg-purple-100 dark:bg-gray-700 rounded-lg' : 'text-gray-600 hover:text-purple-500 dark:text-gray-300 dark:hover:text-purple-200'}`}
                 >

@@ -64,4 +64,4 @@ export interface AdHistoryItem {
   isFavorite: boolean;
 }
 
-export type CurrentView = 'create' | 'history' | 'profile';
+export type CurrentView = 'create' | 'history' | 'profile' | 'landing';

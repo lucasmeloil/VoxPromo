@@ -3,10 +3,12 @@ import Navbar from './components/Navbar'; // Corrected import path
 import CreateAd from './views/CreateAd';
 import History from './views/History';
 import Profile from './views/Profile';
+import LandingPage from './components/LandingPage'; // Import the new LandingPage component
 import { AdHistoryItem, CurrentView, AdPromptConfig } from './types';
 import { useAdHistory } from './hooks/useAdHistory';
 
 const App: React.FC = () => {
+  const [showLandingPage, setShowLandingPage] = useState(true); // New state to control landing page visibility
   const [currentView, setCurrentView] = useState<CurrentView>('create');
   const [initialAdConfig, setInitialAdConfig] = useState<AdPromptConfig | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // New state for mobile menu
@@ -17,11 +19,26 @@ const App: React.FC = () => {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
 
-  const handleViewChange = useCallback((view: CurrentView) => {
-    setCurrentView(view);
-    setInitialAdConfig(null); // Clear any pending edit/duplicate config when switching views
-    setIsMobileMenuOpen(false); // Close mobile menu on navigation
+  const handleStartApp = useCallback(() => {
+    setShowLandingPage(false);
+    setCurrentView('create'); // Default to 'create' view after leaving landing page
+    setIsMobileMenuOpen(false); // Close mobile menu if open
   }, []);
+
+  const handleShowLandingPage = useCallback(() => {
+    setShowLandingPage(true);
+    setIsMobileMenuOpen(false); // Close mobile menu if open
+  }, []);
+
+  const handleViewChange = useCallback((view: CurrentView) => {
+    if (view === 'landing') {
+      handleShowLandingPage();
+    } else {
+      setCurrentView(view);
+      setInitialAdConfig(null); // Clear any pending edit/duplicate config when switching views
+      setIsMobileMenuOpen(false); // Close mobile menu on navigation
+    }
+  }, [handleShowLandingPage]);
 
   const handleAdCreated = useCallback((newAd: AdHistoryItem) => {
     addAdToHistory(newAd);
@@ -39,7 +56,7 @@ const App: React.FC = () => {
     setInitialAdConfig(null);
   }, []);
 
-  const renderView = () => {
+  const renderMainAppContent = () => {
     switch (currentView) {
       case 'create':
         return <CreateAd
@@ -53,6 +70,7 @@ const App: React.FC = () => {
       case 'profile':
         return <Profile />;
       default:
+        // This case should ideally not be reached if showLandingPage is false
         return <CreateAd
           onAdCreated={handleAdCreated}
           initialAdConfig={initialAdConfig}
@@ -64,16 +82,22 @@ const App: React.FC = () => {
 
   return (
     <div className="App min-h-screen flex flex-col">
-      <Navbar
-        currentView={currentView}
-        onViewChange={handleViewChange}
-        isMobileMenuOpen={isMobileMenuOpen}
-        toggleMobileMenu={toggleMobileMenu}
-      />
-      <main className="flex-1 overflow-y-auto">
-        {renderView()}
-      </main>
-      {/* FooterNav is removed */}
+      {showLandingPage ? (
+        <LandingPage onStartApp={handleStartApp} />
+      ) : (
+        <>
+          <Navbar
+            currentView={currentView}
+            onViewChange={handleViewChange}
+            isMobileMenuOpen={isMobileMenuOpen}
+            toggleMobileMenu={toggleMobileMenu}
+            onShowLandingPage={handleShowLandingPage} // Pass new prop to Navbar
+          />
+          <main className="flex-1 overflow-y-auto pt-[64px]"> {/* Added pt-[64px] for fixed navbar */}
+            {renderMainAppContent()}
+          </main>
+        </>
+      )}
     </div>
   );
 };
