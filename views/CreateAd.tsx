@@ -111,7 +111,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     gender === Gender.FEMALE ? 'text-pink-500' : 'text-blue-500';
 
   return (
-    <div className="container mx-auto p-4 pt-20 pb-24 min-h-screen">
+    <div className="container mx-auto p-4 pt-20 min-h-screen"> {/* Adjusted pt-20, pb-24 removed */}
       <h2 className="text-3xl font-bold text-center text-purple-700 dark:text-yellow-400 mb-8 tracking-wide">
         Crie Sua Propaganda
       </h2>

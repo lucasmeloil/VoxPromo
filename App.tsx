@@ -1,28 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Header from './components/Header';
-import FooterNav from './components/FooterNav';
+import Navbar from './components/Navbar'; // Changed from Header to Navbar
 import CreateAd from './views/CreateAd';
 import History from './views/History';
 import Profile from './views/Profile';
 import { AdHistoryItem, CurrentView, AdPromptConfig } from './types';
 import { useAdHistory } from './hooks/useAdHistory';
-// Removed import for LOCAL_STORAGE_THEME_KEY
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<CurrentView>('create');
-  // Removed isDarkMode state and its initialization from localStorage
-  // The theme is now handled globally by index.html body classes.
   const [initialAdConfig, setInitialAdConfig] = useState<AdPromptConfig | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // New state for mobile menu
 
   const { addAdToHistory, history, creationCount } = useAdHistory();
 
-  // Removed useEffect for dark mode class on body and localStorage theme saving.
-
-  // Removed toggleDarkMode function.
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev);
+  }, []);
 
   const handleViewChange = useCallback((view: CurrentView) => {
     setCurrentView(view);
     setInitialAdConfig(null); // Clear any pending edit/duplicate config when switching views
+    setIsMobileMenuOpen(false); // Close mobile menu on navigation
   }, []);
 
   const handleAdCreated = useCallback((newAd: AdHistoryItem) => {
@@ -34,6 +32,7 @@ const App: React.FC = () => {
   const handleEditAd = useCallback((config: AdPromptConfig) => {
     setInitialAdConfig(config);
     setCurrentView('create');
+    setIsMobileMenuOpen(false); // Close mobile menu
   }, []);
 
   const handleClearInitialAdConfig = useCallback(() => {
@@ -45,7 +44,6 @@ const App: React.FC = () => {
       case 'create':
         return <CreateAd
           onAdCreated={handleAdCreated}
-          // Removed isDarkMode prop
           initialAdConfig={initialAdConfig}
           onClearInitialAdConfig={handleClearInitialAdConfig}
           creationCount={creationCount}
@@ -57,7 +55,6 @@ const App: React.FC = () => {
       default:
         return <CreateAd
           onAdCreated={handleAdCreated}
-          // Removed isDarkMode prop
           initialAdConfig={initialAdConfig}
           onClearInitialAdConfig={handleClearInitialAdConfig}
           creationCount={creationCount}
@@ -67,11 +64,16 @@ const App: React.FC = () => {
 
   return (
     <div className="App min-h-screen flex flex-col">
-      <Header /> {/* Removed isDarkMode and toggleDarkMode props */}
+      <Navbar
+        currentView={currentView}
+        onViewChange={handleViewChange}
+        isMobileMenuOpen={isMobileMenuOpen}
+        toggleMobileMenu={toggleMobileMenu}
+      />
       <main className="flex-1 overflow-y-auto">
         {renderView()}
       </main>
-      <FooterNav currentView={currentView} onViewChange={handleViewChange} />
+      {/* FooterNav is removed */}
     </div>
   );
 };

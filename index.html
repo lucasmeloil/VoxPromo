@@ -158,6 +158,9 @@
                 0 0 45px rgba(255, 215, 0, 0.2);
           }
       }
+      .gradient-background {
+        background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+      }
 
     </style>
 <script type="importmap">
@@ -178,27 +181,56 @@
         <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-transparent to-indigo-900 opacity-20"></div>
         <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'16\' height=\'16\' viewBox=\'0 0 16 16\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23a78bfa\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M0 0h8v8H0zM8 8h8v8H8z\'/%3E%3C/g%3E%3C/svg%3E'); background-size: 16px 16px;"></div>
 
-        <div class="z-10 max-w-4xl mx-auto space-y-8">
-            <h1 class="text-6xl md:text-7xl font-extrabold text-white leading-tight drop-shadow-lg glowing-text animate-fade-in-up">
+        <div class="z-10 max-w-5xl mx-auto space-y-8 py-16">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight drop-shadow-lg glowing-text animate-fade-in-up">
                 VoxPromo<span class="text-purple-400">.ai</span>
             </h1>
-            <p class="text-xl md:text-2xl text-purple-200 mt-4 animate-fade-in-up delay-200">
-                Gere Propagandas Musicais Incríveis com o Poder da Inteligência Artificial.
+            <p class="text-xl md:text-2xl lg:text-3xl text-purple-200 mt-4 animate-fade-in-up delay-200 font-semibold">
+                Sua voz na criação de propagandas musicais, impulsionada por IA.
             </p>
-            <p class="text-base md:text-lg text-gray-300 animate-fade-in-up delay-400 max-w-2xl mx-auto">
+            <p class="text-base md:text-lg text-gray-300 animate-fade-in-up delay-400 max-w-3xl mx-auto">
                 Transforme suas ideias em anúncios cativantes para rádio, TV e redes sociais em segundos, com vozes personalizadas e trilhas sonoras envolventes.
             </p>
-            <button id="start-app-button" class="glowing-button relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 animate-bounce-slow delay-600">
-                <span class="relative px-8 py-4 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-lg md:text-xl font-bold">
-                    Comece a Criar Agora!
-                </span>
-            </button>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 animate-fade-in-up delay-600">
+                <button id="start-app-button" class="glowing-button relative inline-flex items-center justify-center p-0.5 overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 animate-bounce-slow">
+                    <span class="relative px-8 py-4 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-lg md:text-xl font-bold">
+                        Comece a Criar Agora!
+                    </span>
+                </button>
+                <a href="#features-section" class="inline-flex items-center justify-center px-8 py-4 border border-purple-600 text-purple-200 rounded-full text-lg md:text-xl font-bold hover:bg-purple-700 hover:text-white transition-all duration-300 shadow-lg animate-fade-in-up delay-800">
+                    Descubra os Recursos
+                </a>
+            </div>
         </div>
 
-        <!-- Monetization Section - Moved and Enhanced -->
-        <div class="z-10 mt-20 max-w-5xl mx-auto p-8 bg-gradient-to-br from-gray-900/80 to-black/80 rounded-2xl shadow-purple-900/50 shadow-xl border border-purple-800 animate-fade-in-up delay-800">
-            <h2 class="text-4xl font-extrabold text-center text-white glowing-text mb-8">
-                Desbloqueie o Poder Total da Sua Criatividade
+        <!-- Features Section -->
+        <section id="features-section" class="z-10 w-full max-w-6xl mx-auto p-8 lg:p-12 mt-20 bg-gradient-to-br from-gray-900/80 to-black/80 rounded-2xl shadow-purple-900/50 shadow-xl border border-purple-800 animate-fade-in-up delay-800 scroll-mt-20">
+            <h2 class="text-4xl font-extrabold text-center text-white glowing-text mb-10">
+                Recursos Inovadores ao Seu Alcance
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg transform transition-all duration-300 hover:scale-105 hover:border-purple-600">
+                    <svg class="w-12 h-12 text-purple-400 mb-4 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                    <h3 class="text-2xl font-bold text-white text-center mb-3">Vozes Realistas com IA</h3>
+                    <p class="text-gray-300 text-center">Escolha entre uma biblioteca de vozes masculinas e femininas, com estilos e tons variados para dar vida à sua mensagem.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg transform transition-all duration-300 hover:scale-105 hover:border-purple-600">
+                    <svg class="w-12 h-12 text-purple-400 mb-4 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.586 11H16a1 1 0 001-1V9a1 1 0 00-1-1h-1.414l-1.707-1.707A1 1 0 0012 6v7a1 1 0 00.293.707l1.707 1.707z" clip-rule="evenodd"></path></svg>
+                    <h3 class="text-2xl font-bold text-white text-center mb-3">Trilhas Sonoras Personalizadas</h3>
+                    <p class="text-gray-300 text-center">Integre músicas de fundo que se alinham perfeitamente com o tom e o estilo da sua propaganda, tudo com o auxílio da IA.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg transform transition-all duration-300 hover:scale-105 hover:border-purple-600">
+                    <svg class="w-12 h-12 text-purple-400 mb-4 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 110-6 3 3 0 010 6z"></path></svg>
+                    <h3 class="text-2xl font-bold text-white text-center mb-3">Geração Multi-Mídia</h3>
+                    <p class="text-gray-300 text-center">Crie anúncios otimizados para rádio, TV, Instagram, TikTok e YouTube, garantindo o máximo impacto em cada plataforma.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monetization Section -->
+        <section id="pricing-section" class="z-10 w-full max-w-5xl mx-auto p-8 lg:p-12 mt-20 bg-gradient-to-br from-gray-900/80 to-black/80 rounded-2xl shadow-purple-900/50 shadow-xl border border-purple-800 animate-fade-in-up delay-1000 scroll-mt-20">
+            <h2 class="text-4xl font-extrabold text-center text-white glowing-text mb-10">
+                Escolha o Plano Perfeito para Você
             </h2>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -211,18 +243,13 @@
                         <p class="text-xl text-gray-300 text-center mb-6">
                             Experimente a magia da VoxPromo!
                         </p>
-                        <ul class="list-disc list-inside text-gray-400 text-left space-y-2 mb-8">
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 1 Criação Gratuita por Mês</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a vozes básicas</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação padrão (WAV)</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Histórico de criações</li>
-                        </ul>
+                        <div class="flex flex-col items-start space-y-3 mb-8">
+                            <li class="flex items-center text-gray-400 text-lg"><svg class="w-6 h-6 mr-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 1 Criação Gratuita por Mês</li>
+                            <li class="flex items-center text-gray-400 text-lg"><svg class="w-6 h-6 mr-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a vozes básicas</li>
+                            <li class="flex items-center text-gray-400 text-lg"><svg class="w-6 h-6 mr-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação padrão (WAV)</li>
+                            <li class="flex items-center text-gray-400 text-lg"><svg class="w-6 h-6 mr-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Histórico de criações</li>
+                        </div>
                     </div>
-                    <button id="start-free-button" class="glowing-button relative inline-flex items-center justify-center p-0.5 mt-auto overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                        <span class="relative px-8 py-3 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-lg font-bold">
-                            Comece Gratuitamente!
-                        </span>
-                    </button>
                 </div>
 
                 <!-- Premium Plan Card - Highlighted -->
@@ -236,17 +263,17 @@
                         <p class="text-xl text-yellow-100 text-center mb-6">
                             Liberte sua criatividade sem limites!
                         </p>
-                        <ul class="list-disc list-inside text-yellow-100 text-left space-y-2 mb-8">
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Criações Ilimitadas</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a TODAS as 12 vozes exclusivas</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação em alta qualidade (MP3, WAV)</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Biblioteca de trilhas sonoras exclusivas (futuro)</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Integração com agendadores de mídia (futuro)</li>
-                        </ul>
+                        <div class="flex flex-col items-start space-y-3 mb-8">
+                            <li class="flex items-center text-yellow-100 text-lg"><svg class="w-6 h-6 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Criações Ilimitadas</li>
+                            <li class="flex items-center text-yellow-100 text-lg"><svg class="w-6 h-6 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a TODAS as 12 vozes exclusivas</li>
+                            <li class="flex items-center text-yellow-100 text-lg"><svg class="w-6 h-6 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação em alta qualidade (MP3, WAV)</li>
+                            <li class="flex items-center text-yellow-100 text-lg"><svg class="w-6 h-6 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Biblioteca de trilhas sonoras exclusivas (futuro)</li>
+                            <li class="flex items-center text-yellow-100 text-lg"><svg class="w-6 h-6 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Integração com agendadores de mídia (futuro)</li>
+                        </div>
+                        <button id="upgrade-premium-button-landing" class="mt-auto bg-white text-purple-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 text-lg w-full">
+                            Liberar Acesso Ilimitado!
+                        </button>
                     </div>
-                    <button id="upgrade-premium-button" class="mt-auto bg-white text-purple-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 text-lg">
-                        Liberar Acesso Ilimitado!
-                    </button>
                 </div>
             </div>
             <p class="text-center text-gray-400 text-sm mt-8">
@@ -255,11 +282,15 @@
                     ai.google.dev/gemini-api/docs/billing
                 </a>
             </p>
-        </div>
+        </section>
+
+        <footer class="z-10 mt-20 text-center text-gray-500 text-sm p-4 w-full">
+          &copy; {new Date().getFullYear()} VoxPromo.ai. Todos os direitos reservados.
+        </footer>
     </div>
 
     <!-- React App Root -->
-    <div id="root" class="min-h-screen"></div>
+    <div id="root" class="min-h-screen pt-[64px] bg-inherit"></div>
     <script type="module" src="/index.tsx"></script>
     <script>
         function showApp() {
@@ -268,12 +299,26 @@
         }
 
         document.getElementById('start-app-button').addEventListener('click', showApp);
-        document.getElementById('start-free-button').addEventListener('click', showApp);
-        document.getElementById('upgrade-premium-button').addEventListener('click', showApp);
+        // Removed start-free-button and upgrade-premium-button from direct app launch
+        document.getElementById('upgrade-premium-button-landing').addEventListener('click', showApp); // This will transition to the app and user can upgrade there
 
         // Initially hide the React app until a button is clicked
         document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('root').style.display = 'none';
+          const featuresSection = document.getElementById('features-section');
+          if (featuresSection) {
+            document.querySelector('a[href="#features-section"]').addEventListener('click', (event) => {
+              event.preventDefault();
+              featuresSection.scrollIntoView({ behavior: 'smooth' });
+            });
+          }
+           const pricingSection = document.getElementById('pricing-section');
+          if (pricingSection) {
+            document.querySelector('a[href="#pricing-section"]').addEventListener('click', (event) => {
+              event.preventDefault();
+              pricingSection.scrollIntoView({ behavior: 'smooth' });
+            });
+          }
         });
     </script>
 </body>
