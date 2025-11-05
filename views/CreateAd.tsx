@@ -9,13 +9,13 @@ import { useAdHistory } from '../hooks/useAdHistory';
 
 interface CreateAdProps {
   onAdCreated: (ad: AdHistoryItem) => void;
-  isDarkMode: boolean;
+  // Removed isDarkMode prop
   initialAdConfig?: AdPromptConfig | null;
   onClearInitialAdConfig: () => void;
   creationCount: number;
 }
 
-const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, isDarkMode, initialAdConfig, onClearInitialAdConfig, creationCount }) => {
+const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, creationCount }) => { // Removed isDarkMode from props
   const [prompt, setPrompt] = useState('');
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(VOICE_OPTIONS[0].id);
   const [selectedTone, setSelectedTone] = useState<ToneOption>(TONE_OPTIONS[0]);

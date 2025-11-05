@@ -7,26 +7,158 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
       body {
         font-family: 'Montserrat', sans-serif;
+        background-color: #0a001a; /* Very dark purple */
+        background-image: radial-gradient(at 50% 0%, #3a0050 0%, transparent 70%),
+                          radial-gradient(at 0% 100%, #1e003a 0%, transparent 50%),
+                          radial-gradient(at 100% 100%, #0a002a 0%, transparent 60%);
+        color: #e0e0e0; /* Light gray for general text */
+        transition: background-color 0.3s ease;
       }
-      .dark-mode {
-        @apply bg-gray-900 text-gray-100;
-      }
-      .dark-mode .card {
+      /* Ensure components adapt to the global dark theme */
+      .card {
         @apply bg-gray-800 shadow-purple-900/50;
       }
-      .dark-mode .input-field, .dark-mode .select-field {
+      .input-field, .select-field {
         @apply bg-gray-700 text-gray-100 border-purple-600;
       }
-      .dark-mode .input-field:focus, .dark-mode .select-field:focus {
+      .input-field:focus, .select-field:focus {
         @apply ring-purple-500 ring-opacity-75;
       }
-      .dark-mode .active-nav-item {
+      .active-nav-item {
         @apply text-purple-400;
       }
+
+      /* Custom scrollbar for dark mode */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #1a0033; /* Dark track */
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #8b5cf6; /* Purple thumb */
+        border-radius: 20px;
+        border: 2px solid #1a0033;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #a78bfa; /* Lighter purple on hover */
+      }
+
+      /* Glowing button effect */
+      .glowing-button {
+          position: relative;
+          z-index: 1;
+          overflow: hidden;
+          background: linear-gradient(45deg, #8b5cf6, #c084fc, #8b5cf6); /* Initial gradient */
+          background-size: 200% 200%;
+          border: none;
+      }
+      .glowing-button::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: conic-gradient(transparent, rgba(168, 85, 247, 0.6), transparent 50%, rgba(168, 85, 247, 0.6), transparent);
+          animation: rotate 4s linear infinite;
+          z-index: -1;
+          border-radius: inherit;
+      }
+      .glowing-button::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(45deg, #8b5cf6, #c084fc, #8b5cf6);
+          background-size: 200% 200%;
+          animation: gradientShift 3s ease infinite;
+          opacity: 0.6;
+          filter: blur(8px);
+          z-index: -2;
+          border-radius: inherit;
+      }
+      .glowing-button:hover::after {
+          opacity: 1;
+      }
+      @keyframes rotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+      @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+      }
+
+      /* Custom animations for landing page elements */
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translate3d(0, 40px, 0);
+          }
+          to {
+              opacity: 1;
+              transform: translate3d(0, 0, 0);
+          }
+      }
+      .animate-fade-in-up {
+          animation: fadeInUp 1s ease-out forwards;
+      }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .animate-bounce-slow {
+          animation: bounceSlow 2s infinite ease-in-out;
+      }
+      @keyframes bounceSlow {
+          0%, 100% {
+              transform: translateY(0);
+          }
+          50% {
+              transform: translateY(-5px);
+          }
+      }
+
+      /* Glowing text effect */
+      .glowing-text {
+        text-shadow:
+          0 0 5px rgba(168, 85, 247, 0.7),
+          0 0 10px rgba(168, 85, 247, 0.5),
+          0 0 15px rgba(168, 85, 247, 0.3);
+      }
+
+      /* Premium Plan specific glow */
+      .premium-glow {
+          box-shadow:
+            0 0 15px rgba(255, 215, 0, 0.6),
+            0 0 30px rgba(255, 215, 0, 0.4),
+            0 0 45px rgba(255, 215, 0, 0.2);
+          animation: pulsateGlow 2s infinite alternate;
+      }
+
+      @keyframes pulsateGlow {
+          0% {
+              box-shadow:
+                0 0 10px rgba(255, 215, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.2);
+          }
+          100% {
+              box-shadow:
+                0 0 15px rgba(255, 215, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.4),
+                0 0 45px rgba(255, 215, 0, 0.2);
+          }
+      }
+
     </style>
 <script type="importmap">
 {
@@ -40,8 +172,109 @@
 }
 </script>
 </head>
-<body class="bg-gray-50 text-gray-900 transition-colors duration-300">
-    <div id="root"></div>
+<body class="custom-scrollbar">
+    <!-- Landing Page Content -->
+    <div id="landing-page" class="min-h-screen flex flex-col items-center justify-center text-center p-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-transparent to-indigo-900 opacity-20"></div>
+        <div class="absolute inset-0 z-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'16\' height=\'16\' viewBox=\'0 0 16 16\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23a78bfa\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M0 0h8v8H0zM8 8h8v8H8z\'/%3E%3C/g%3E%3C/svg%3E'); background-size: 16px 16px;"></div>
+
+        <div class="z-10 max-w-4xl mx-auto space-y-8">
+            <h1 class="text-6xl md:text-7xl font-extrabold text-white leading-tight drop-shadow-lg glowing-text animate-fade-in-up">
+                VoxPromo<span class="text-purple-400">.ai</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-purple-200 mt-4 animate-fade-in-up delay-200">
+                Gere Propagandas Musicais Incríveis com o Poder da Inteligência Artificial.
+            </p>
+            <p class="text-base md:text-lg text-gray-300 animate-fade-in-up delay-400 max-w-2xl mx-auto">
+                Transforme suas ideias em anúncios cativantes para rádio, TV e redes sociais em segundos, com vozes personalizadas e trilhas sonoras envolventes.
+            </p>
+            <button id="start-app-button" class="glowing-button relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 animate-bounce-slow delay-600">
+                <span class="relative px-8 py-4 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-lg md:text-xl font-bold">
+                    Comece a Criar Agora!
+                </span>
+            </button>
+        </div>
+
+        <!-- Monetization Section - Moved and Enhanced -->
+        <div class="z-10 mt-20 max-w-5xl mx-auto p-8 bg-gradient-to-br from-gray-900/80 to-black/80 rounded-2xl shadow-purple-900/50 shadow-xl border border-purple-800 animate-fade-in-up delay-800">
+            <h2 class="text-4xl font-extrabold text-center text-white glowing-text mb-8">
+                Desbloqueie o Poder Total da Sua Criatividade
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Free Plan Card -->
+                <div class="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-lg flex flex-col justify-between transform transition-all duration-300 hover:scale-105 hover:border-purple-600">
+                    <div>
+                        <h3 class="text-3xl font-bold text-purple-400 mb-4 flex items-center justify-center">
+                            Plano Gratuito
+                        </h3>
+                        <p class="text-xl text-gray-300 text-center mb-6">
+                            Experimente a magia da VoxPromo!
+                        </p>
+                        <ul class="list-disc list-inside text-gray-400 text-left space-y-2 mb-8">
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 1 Criação Gratuita por Mês</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a vozes básicas</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação padrão (WAV)</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Histórico de criações</li>
+                        </ul>
+                    </div>
+                    <button id="start-free-button" class="glowing-button relative inline-flex items-center justify-center p-0.5 mt-auto overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                        <span class="relative px-8 py-3 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-lg font-bold">
+                            Comece Gratuitamente!
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Premium Plan Card - Highlighted -->
+                <div class="bg-gradient-to-br from-yellow-700 to-amber-900 p-8 rounded-xl border border-yellow-500 shadow-2xl premium-glow flex flex-col justify-between transform transition-all duration-300 hover:scale-105">
+                    <div>
+                        <h3 class="text-3xl font-bold text-white mb-4 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z"></path></svg>
+                            Plano Premium
+                        </h3>
+                        <p class="text-2xl font-extrabold text-yellow-300 text-center mb-2">R$ 14,90 <span class="text-xl font-normal text-yellow-200">/ mês</span></p>
+                        <p class="text-xl text-yellow-100 text-center mb-6">
+                            Liberte sua criatividade sem limites!
+                        </p>
+                        <ul class="list-disc list-inside text-yellow-100 text-left space-y-2 mb-8">
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Criações Ilimitadas</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acesso a TODAS as 12 vozes exclusivas</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Exportação em alta qualidade (MP3, WAV)</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Biblioteca de trilhas sonoras exclusivas (futuro)</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Integração com agendadores de mídia (futuro)</li>
+                        </ul>
+                    </div>
+                    <button id="upgrade-premium-button" class="mt-auto bg-white text-purple-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 text-lg">
+                        Liberar Acesso Ilimitado!
+                    </button>
+                </div>
+            </div>
+            <p class="text-center text-gray-400 text-sm mt-8">
+                Para informações sobre faturamento e preços, visite{' '}
+                <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" class="text-yellow-300 hover:underline">
+                    ai.google.dev/gemini-api/docs/billing
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <!-- React App Root -->
+    <div id="root" class="min-h-screen"></div>
     <script type="module" src="/index.tsx"></script>
+    <script>
+        function showApp() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('root').style.display = 'block';
+        }
+
+        document.getElementById('start-app-button').addEventListener('click', showApp);
+        document.getElementById('start-free-button').addEventListener('click', showApp);
+        document.getElementById('upgrade-premium-button').addEventListener('click', showApp);
+
+        // Initially hide the React app until a button is clicked
+        document.addEventListener('DOMContentLoaded', () => {
+          document.getElementById('root').style.display = 'none';
+        });
+    </script>
 </body>
 </html>

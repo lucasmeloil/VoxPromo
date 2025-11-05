@@ -42,6 +42,6 @@ export const MEDIA_TYPE_OPTIONS: MediaType[] = [
 ];
 
 export const LOCAL_STORAGE_HISTORY_KEY = 'voxpromo_ad_history';
-export const LOCAL_STORAGE_THEME_KEY = 'voxpromo_theme';
+// Removed LOCAL_STORAGE_THEME_KEY as theme is now fixed.
 
-export const MAX_FREE_CREATIONS = 5; // Example limit for free plan
+export const MAX_FREE_CREATIONS = 1; // Example limit for free plan

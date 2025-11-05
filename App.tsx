@@ -6,39 +6,19 @@ import History from './views/History';
 import Profile from './views/Profile';
 import { AdHistoryItem, CurrentView, AdPromptConfig } from './types';
 import { useAdHistory } from './hooks/useAdHistory';
-import { LOCAL_STORAGE_THEME_KEY } from './constants';
+// Removed import for LOCAL_STORAGE_THEME_KEY
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<CurrentView>('create');
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    try {
-      const storedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
-      return storedTheme ? JSON.parse(storedTheme) : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    } catch (error) {
-      console.error("Failed to parse theme from localStorage", error);
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-  });
+  // Removed isDarkMode state and its initialization from localStorage
+  // The theme is now handled globally by index.html body classes.
   const [initialAdConfig, setInitialAdConfig] = useState<AdPromptConfig | null>(null);
 
   const { addAdToHistory, history, creationCount } = useAdHistory();
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
-    try {
-      localStorage.setItem(LOCAL_STORAGE_THEME_KEY, JSON.stringify(isDarkMode));
-    } catch (error) {
-      console.error("Failed to save theme to localStorage", error);
-    }
-  }, [isDarkMode]);
+  // Removed useEffect for dark mode class on body and localStorage theme saving.
 
-  const toggleDarkMode = useCallback(() => {
-    setIsDarkMode(prevMode => !prevMode);
-  }, []);
+  // Removed toggleDarkMode function.
 
   const handleViewChange = useCallback((view: CurrentView) => {
     setCurrentView(view);
@@ -65,7 +45,7 @@ const App: React.FC = () => {
       case 'create':
         return <CreateAd
           onAdCreated={handleAdCreated}
-          isDarkMode={isDarkMode}
+          // Removed isDarkMode prop
           initialAdConfig={initialAdConfig}
           onClearInitialAdConfig={handleClearInitialAdConfig}
           creationCount={creationCount}
@@ -73,11 +53,11 @@ const App: React.FC = () => {
       case 'history':
         return <History onEditAd={handleEditAd} />;
       case 'profile':
-        return <Profile creationCount={creationCount} />;
+        return <Profile />;
       default:
         return <CreateAd
           onAdCreated={handleAdCreated}
-          isDarkMode={isDarkMode}
+          // Removed isDarkMode prop
           initialAdConfig={initialAdConfig}
           onClearInitialAdConfig={handleClearInitialAdConfig}
           creationCount={creationCount}
@@ -87,7 +67,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App min-h-screen flex flex-col">
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Header /> {/* Removed isDarkMode and toggleDarkMode props */}
       <main className="flex-1 overflow-y-auto">
         {renderView()}
       </main>

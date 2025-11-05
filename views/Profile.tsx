@@ -4,14 +4,14 @@ import { useAdHistory } from '../hooks/useAdHistory';
 import { MAX_FREE_CREATIONS } from '../constants';
 
 interface ProfileProps {
-  creationCount: number;
+  // Removed creationCount prop
 }
 
-const Profile: React.FC<ProfileProps> = ({ creationCount }) => {
+const Profile: React.FC<ProfileProps> = () => { // Removed creationCount from props
   const { history } = useAdHistory();
   const totalAds = history.length;
   const favoriteAds = history.filter(ad => ad.isFavorite).length;
-  const remainingCreations = Math.max(0, MAX_FREE_CREATIONS - creationCount);
+  // Removed remainingCreations as monetization is no longer here
 
   // Mock settings for demonstration
   const [voicePreference, setVoicePreference] = useState('any');
@@ -91,56 +91,7 @@ const Profile: React.FC<ProfileProps> = ({ creationCount }) => {
         </div>
       </div>
 
-      {/* Monetization Section */}
-      <div className="card bg-gradient-to-br from-purple-700 to-indigo-700 text-white p-6 rounded-xl shadow-2xl">
-        <CreditCardIcon className="w-12 h-12 text-yellow-300 mb-4 mx-auto" />
-        <h3 className="text-2xl font-bold text-center mb-4">Seu Plano VoxPromo</h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Free Plan Info */}
-          <div className="bg-purple-800/70 p-5 rounded-lg shadow-inner">
-            <h4 className="text-xl font-semibold mb-2 flex items-center">
-              <ShieldCheckIcon className="w-6 h-6 mr-2 text-green-400" />
-              Plano Gratuito
-            </h4>
-            <p className="text-gray-200">
-              Você tem {remainingCreations} criações restantes este mês (limite de {MAX_FREE_CREATIONS}).
-            </p>
-            <ul className="list-disc list-inside text-gray-300 mt-2">
-              <li>Acesso a vozes básicas</li>
-              <li>Exportação padrão</li>
-              <li>Histórico de criações</li>
-            </ul>
-          </div>
-
-          {/* Premium Plan CTA */}
-          <div className="bg-indigo-800/70 p-5 rounded-lg shadow-inner flex flex-col justify-between">
-            <div>
-              <h4 className="text-xl font-semibold mb-2 flex items-center">
-                <StarIcon className="w-6 h-6 mr-2 text-yellow-300" />
-                Plano Premium
-              </h4>
-              <p className="text-gray-200">Desbloqueie todo o potencial da VoxPromo:</p>
-              <ul className="list-disc list-inside text-gray-300 mt-2">
-                <li>Acesso a todas as 12 vozes</li>
-                <li>Criações ilimitadas</li>
-                <li>Exportação em alta qualidade (MP3, WAV)</li>
-                <li>Biblioteca de trilhas sonoras exclusivas (futuro)</li>
-                <li>Integração com agendadores de mídia (futuro)</li>
-              </ul>
-            </div>
-            <button className="mt-4 bg-yellow-400 text-purple-900 font-bold py-3 px-6 rounded-full shadow-lg hover:bg-yellow-500 transition-all duration-300 transform hover:scale-105">
-              Fazer Upgrade para Premium!
-            </button>
-          </div>
-        </div>
-        <p className="text-center text-gray-300 text-sm mt-6">
-          Para informações sobre faturamento e preços, visite{' '}
-          <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:underline">
-            ai.google.dev/gemini-api/docs/billing
-          </a>
-        </p>
-      </div>
+      {/* Monetization Section - REMOVED from Profile.tsx, now in index.html */}
     </div>
   );
 };
