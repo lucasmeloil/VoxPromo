@@ -136,12 +136,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStartApp }) => {
                         </button>
                     </div>
                 </div>
-                <p className="text-center text-gray-400 text-xs mt-8">
-                    Para informações sobre faturamento e preços, visite{' '}
-                    <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:underline">
-                        ai.google.dev/gemini-api/docs/billing
-                    </a>
-                </p>
             </section>
 
             <footer className="z-10 mt-16 text-center text-gray-500 text-xs p-4 w-full">

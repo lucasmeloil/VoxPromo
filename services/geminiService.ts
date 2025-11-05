@@ -109,19 +109,20 @@ function createWavBlob(audioData: Uint8Array, sampleRate: number, numChannels: n
   return new Blob([buffer], { type: 'audio/wav' });
 }
 
+const initializeGeminiClient = async () => {
+  // Assume process.env.API_KEY is pre-configured and valid in this environment.
+  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+};
+
 
 export const generateAdContent = async (
   prompt: string,
   tone: string,
   mediaType: string,
 ): Promise<GeneratedAdContent> => {
-  if (!process.env.API_KEY) {
-    throw new Error("Gemini API Key is not configured.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
   try {
+    const ai = await initializeGeminiClient(); // Initialize client here
+
     const systemInstruction = `Você é um especialista em marketing e um criador de conteúdo para propagandas. 
     Sua tarefa é gerar um roteiro de propaganda (adScript) e uma sugestão de trilha sonora (musicSuggestion) para um anúncio.
     O adScript deve ser conciso, criativo e adequado para o tipo de mídia e tom especificados.
@@ -160,7 +161,7 @@ export const generateAdContent = async (
 
     const jsonStr = response.text.trim();
     return JSON.parse(jsonStr) as GeneratedAdContent;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating ad content:", error);
     throw new Error(`Falha ao gerar o conteúdo da propaganda: ${error instanceof Error ? error.message : String(error)}`);
   }
@@ -170,13 +171,9 @@ export const generateSpeech = async (
   text: string,
   voiceName: GeminiVoiceName,
 ): Promise<string> => {
-  if (!process.env.API_KEY) {
-    throw new Error("Gemini API Key is not configured.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
   try {
+    const ai = await initializeGeminiClient(); // Initialize client here
+
     const response: GenerateContentResponse = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
       contents: [{ parts: [{ text: text }] }],
@@ -219,7 +216,7 @@ export const generateSpeech = async (
       reader.readAsDataURL(wavBlob);
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating speech:", error);
     throw new Error(`Falha ao gerar o áudio da propaganda: ${error instanceof Error ? error.message : String(error)}`);
   }

@@ -2,28 +2,27 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { AdHistoryItem, AdPromptConfig, Gender, ToneOption, MediaType, VoiceOption, GeneratedAdContent, BackgroundMusicOption } from '../types';
 import { generateAdContent, generateSpeech } from '../services/geminiService';
 import { VOICE_OPTIONS, TONE_OPTIONS, MEDIA_TYPE_OPTIONS, MAX_FREE_CREATIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants';
-import AudioPlayer from '../components/AudioPlayer'; // Keep for standalone speech playback
-import CombinedAudioPlayer from '../components/CombinedAudioPlayer'; // New combined player
+import AudioPlayer from '../components/AudioPlayer';
+import CombinedAudioPlayer from '../components/CombinedAudioPlayer';
 import { SparklesIcon, XCircleIcon, CheckCircleIcon, RocketLaunchIcon } from '@heroicons/react/24/solid';
 import { useAdHistory } from '../hooks/useAdHistory';
 
 interface CreateAdProps {
   onAdCreated: (ad: AdHistoryItem) => void;
-  // Removed isDarkMode prop
   initialAdConfig?: AdPromptConfig | null;
   onClearInitialAdConfig: () => void;
   creationCount: number;
 }
 
-const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, creationCount }) => { // Removed isDarkMode from props
+const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, creationCount }) => {
   const [prompt, setPrompt] = useState('');
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(VOICE_OPTIONS[0].id);
   const [selectedTone, setSelectedTone] = useState<ToneOption>(TONE_OPTIONS[0]);
   const [selectedMediaType, setSelectedMediaType] = useState<MediaType>(MEDIA_TYPE_OPTIONS[0]);
-  const [selectedBackgroundMusicId, setSelectedBackgroundMusicId] = useState<string>(BACKGROUND_MUSIC_OPTIONS[0].id); // New state for background music
+  const [selectedBackgroundMusicId, setSelectedBackgroundMusicId] = useState<string>(BACKGROUND_MUSIC_OPTIONS[0].id);
   const [generatedText, setGeneratedText] = useState('');
   const [musicSuggestion, setMusicSuggestion] = useState('');
-  const [audioUrl, setAudioUrl] = useState(''); // Speech audio
+  const [audioUrl, setAudioUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -38,12 +37,12 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
       setSelectedVoiceId(initialAdConfig.voiceId);
       setSelectedTone(initialAdConfig.tone);
       setSelectedMediaType(initialAdConfig.mediaType);
-      setSelectedBackgroundMusicId(initialAdConfig.backgroundMusicId || BACKGROUND_MUSIC_OPTIONS[0].id); // Set background music from initial config
+      setSelectedBackgroundMusicId(initialAdConfig.backgroundMusicId || BACKGROUND_MUSIC_OPTIONS[0].id);
       onClearInitialAdConfig();
     }
   }, [initialAdConfig, onClearInitialAdConfig]);
 
-  const handleSubmit = useCallback(async (e?: React.FormEvent) => {
+  const handleSubmitInternal = useCallback(async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (isLoading) return;
 
@@ -77,7 +76,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
         voice: selectedVoice,
         tone: selectedTone,
         mediaType: selectedMediaType,
-        backgroundMusicId: selectedBackgroundMusicId, // Include selected background music ID
+        backgroundMusicId: selectedBackgroundMusicId,
         generatedText: adContent.adScript,
         musicSuggestion: adContent.musicSuggestion,
         audioUrl: audioDataUrl,
@@ -94,12 +93,13 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     }
   }, [prompt, selectedTone, selectedMediaType, selectedVoiceId, selectedBackgroundMusicId, onAdCreated, isLoading, isFreePlanLimited]);
 
+
   const handleClear = useCallback(() => {
     setPrompt('');
     setSelectedVoiceId(VOICE_OPTIONS[0].id);
     setSelectedTone(TONE_OPTIONS[0]);
     setSelectedMediaType(MEDIA_TYPE_OPTIONS[0]);
-    setSelectedBackgroundMusicId(BACKGROUND_MUSIC_OPTIONS[0].id); // Clear background music selection
+    setSelectedBackgroundMusicId(BACKGROUND_MUSIC_OPTIONS[0].id);
     setGeneratedText('');
     setMusicSuggestion('');
     setAudioUrl('');
@@ -111,12 +111,12 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     gender === Gender.FEMALE ? 'text-pink-500' : 'text-blue-500';
 
   return (
-    <div className="container mx-auto p-4 pt-20 min-h-screen"> {/* Adjusted pt-20 */}
+    <div className="container mx-auto p-4 pt-20 min-h-screen">
       <h2 className="text-3xl font-bold text-center text-purple-700 dark:text-yellow-400 mb-8 tracking-wide">
         Crie Sua Propaganda
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6 mb-8">
+      <form onSubmit={handleSubmitInternal} className="space-y-6 mb-8">
         <div className="card bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl">
           <label htmlFor="prompt" className="block text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
             Seu Prompt Descritivo:
@@ -192,7 +192,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
             </select>
           </div>
 
-          <div className="md:col-span-full lg:col-span-1"> {/* This div might need adjustment for layout */}
+          <div className="md:col-span-full lg:col-span-1">
             <label htmlFor="backgroundMusic" className="block text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
               Música de Fundo (Estilo):
             </label>
@@ -222,7 +222,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             type="submit"
-            className={`btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+            className={`btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center ${isLoading || isFreePlanLimited ? 'opacity-60 cursor-not-allowed' : ''}`}
             disabled={isLoading || isFreePlanLimited}
           >
             {isLoading ? (

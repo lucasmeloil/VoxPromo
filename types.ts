@@ -33,7 +33,7 @@ export enum MediaType {
   RADIO = 'Rádio',
   TELEVISION = 'Televisão',
   INSTAGRAM = 'Instagram',
-  TIKTOK = 'TikTok',
+  TIKTOK = 'YouTube',
   YOUTUBE = 'YouTube',
 }
 
