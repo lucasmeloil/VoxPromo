@@ -110,8 +110,14 @@ function createWavBlob(audioData: Uint8Array, sampleRate: number, numChannels: n
 }
 
 const initializeGeminiClient = async () => {
-  // Assume process.env.API_KEY is pre-configured and valid in this environment.
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Utiliza diretamente a chave API fornecida pelo usuário,
+  // pois process.env.API_KEY não está sendo configurado no ambiente do navegador
+  // e o usuário solicitou uma configuração "automática" sem UI de seleção.
+  const API_KEY = "AIzaSyDgwcVDiFc6v7-m0kwF2EtShRZjj2Pdj-M"; // Chave API fornecida pelo usuário
+  if (!API_KEY) {
+    throw new Error("A chave API não está configurada. Por favor, certifique-se de que está definida.");
+  }
+  return new GoogleGenAI({ apiKey: API_KEY });
 };
 
 
