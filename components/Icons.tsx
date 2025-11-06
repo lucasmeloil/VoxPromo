@@ -1,0 +1,1 @@
+// Removed GoogleIcon component as Google login has been deprecated.

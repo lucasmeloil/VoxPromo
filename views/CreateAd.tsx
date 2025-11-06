@@ -6,15 +6,19 @@ import AudioPlayer from '../components/AudioPlayer';
 import CombinedAudioPlayer from '../components/CombinedAudioPlayer';
 import { SparklesIcon, XCircleIcon, CheckCircleIcon, RocketLaunchIcon } from '@heroicons/react/24/solid';
 import { useAdHistory } from '../hooks/useAdHistory';
+import { useAuth } from '../contexts/AuthContext'; // New import
 
 interface CreateAdProps {
   onAdCreated: (ad: AdHistoryItem) => void;
   initialAdConfig?: AdPromptConfig | null;
   onClearInitialAdConfig: () => void;
-  creationCount: number;
+  isPremium: boolean; // Now comes from AuthContext
+  creationCount: number; // Now comes from AuthContext
 }
 
-const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, creationCount }) => {
+const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, isPremium, creationCount }) => {
+  const { incrementCreationCount } = useAuth(); // Get increment function from AuthContext
+
   const [prompt, setPrompt] = useState('');
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(VOICE_OPTIONS[0].id);
   const [selectedTone, setSelectedTone] = useState<ToneOption>(TONE_OPTIONS[0]);
@@ -29,7 +33,9 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
 
   const selectedVoice = VOICE_OPTIONS.find(v => v.id === selectedVoiceId) || VOICE_OPTIONS[0];
   const selectedBackgroundMusic = BACKGROUND_MUSIC_OPTIONS.find(music => music.id === selectedBackgroundMusicId) || BACKGROUND_MUSIC_OPTIONS[0];
-  const isFreePlanLimited = creationCount >= MAX_FREE_CREATIONS;
+  
+  // Free plan is limited ONLY if not premium
+  const isFreePlanLimited = !isPremium && creationCount >= MAX_FREE_CREATIONS;
 
   useEffect(() => {
     if (initialAdConfig) {
@@ -47,7 +53,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     if (isLoading) return;
 
     if (isFreePlanLimited) {
-      setError('Você atingiu o limite de criações para o plano gratuito. Atualize para o Premium!');
+      setError('Você atingiu o limite de criações para o plano gratuito. Atualize para o Premium para criar ilimitadamente!');
       return;
     }
 
@@ -83,6 +89,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
         isFavorite: false,
       };
       onAdCreated(newAd);
+      incrementCreationCount(); // Increment count for current user
       setShowResult(true);
 
     } catch (err: any) {
@@ -91,7 +98,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, selectedTone, selectedMediaType, selectedVoiceId, selectedBackgroundMusicId, onAdCreated, isLoading, isFreePlanLimited]);
+  }, [prompt, selectedTone, selectedMediaType, selectedVoiceId, selectedBackgroundMusicId, onAdCreated, isLoading, isFreePlanLimited, incrementCreationCount]);
 
 
   const handleClear = useCallback(() => {

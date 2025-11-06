@@ -1,39 +1,32 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AdHistoryItem } from '../types';
-import { LOCAL_STORAGE_HISTORY_KEY } from '../constants';
+import { SESSION_STORAGE_HISTORY_KEY } from '../constants'; // Changed from LOCAL_STORAGE_HISTORY_KEY
 
 interface UseAdHistoryReturn {
   history: AdHistoryItem[];
   addAdToHistory: (ad: AdHistoryItem) => void;
   updateAdInHistory: (ad: AdHistoryItem) => void;
   clearHistory: () => void;
-  creationCount: number;
 }
 
 export const useAdHistory = (): UseAdHistoryReturn => {
   const [history, setHistory] = useState<AdHistoryItem[]>(() => {
     try {
-      const storedHistory = localStorage.getItem(LOCAL_STORAGE_HISTORY_KEY);
+      // Using sessionStorage instead of localStorage as per new requirements
+      const storedHistory = sessionStorage.getItem(SESSION_STORAGE_HISTORY_KEY);
       return storedHistory ? JSON.parse(storedHistory) : [];
     } catch (error) {
-      console.error("Failed to parse history from localStorage", error);
+      console.error("Falha ao analisar histórico de sessionStorage", error);
       return [];
     }
   });
 
-  // Track the number of creations for the current month/period for monetization simulation
-  const [creationCount, setCreationCount] = useState<number>(() => {
-    // In a real app, this would involve a backend or more complex client-side logic
-    // For this example, we'll just count total ads in history.
-    return history.length;
-  });
-
   useEffect(() => {
     try {
-      localStorage.setItem(LOCAL_STORAGE_HISTORY_KEY, JSON.stringify(history));
-      setCreationCount(history.length); // Update count when history changes
+      // Persisting to sessionStorage
+      sessionStorage.setItem(SESSION_STORAGE_HISTORY_KEY, JSON.stringify(history));
     } catch (error) {
-      console.error("Failed to save history to localStorage", error);
+      console.error("Falha ao salvar histórico em sessionStorage", error);
     }
   }, [history]);
 
@@ -51,5 +44,5 @@ export const useAdHistory = (): UseAdHistoryReturn => {
     setHistory([]);
   }, []);
 
-  return { history, addAdToHistory, updateAdInHistory, clearHistory, creationCount };
+  return { history, addAdToHistory, updateAdInHistory, clearHistory };
 };

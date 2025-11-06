@@ -20,7 +20,7 @@ export const BACKGROUND_MUSIC_OPTIONS: BackgroundMusicOption[] = [
   { id: 'none', name: 'Nenhuma', styleDescription: 'Sem música de fundo.', audioUrl: '' },
   { id: 'pop-energetic', name: 'Pop Energético', styleDescription: 'Trilha pop com batida animada, ideal para produtos modernos.', audioUrl: '/music/pop-energetic.mp3' },
   { id: 'calm-corporate', name: 'Calma Corporativa', styleDescription: 'Música suave e inspiradora para mensagens institucionais.', audioUrl: '/music/calm-corporate.mp3' },
-  { id: 'epic-dramatic', name: 'Épico Dramático', styleDescription: 'Trilha sonora grandiosa para anúncios de impacto e emoção.', audioUrl: '/music/epic-dramatic.mp3' },
+  { id: 'epic-dramatic', name: 'Épico Dramático', styleDescription: 'Trilha sonora orquestral grandiosa e dramática, perfeita para momentos de impacto.', audioUrl: '/music/epic-dramatic.mp3' },
   { id: 'jazzy-upbeat', name: 'Jazz Alegre', styleDescription: 'Ritmo descontraído e elegante para culinária e eventos.', audioUrl: '/music/jazzy-upbeat.mp3' },
   { id: 'acoustic-folk', name: 'Folk Acústico', styleDescription: 'Música orgânica e autêntica para produtos artesanais e natureza.', audioUrl: '/music/acoustic-folk.mp3' },
 ];
@@ -41,7 +41,23 @@ export const MEDIA_TYPE_OPTIONS: MediaType[] = [
   MediaType.YOUTUBE,
 ];
 
-export const LOCAL_STORAGE_HISTORY_KEY = 'voxpromo_ad_history';
-// Removed LOCAL_STORAGE_THEME_KEY as theme is now fixed.
+// Changed from localStorage to sessionStorage for session-based persistence
+export const SESSION_STORAGE_HISTORY_KEY = 'voxpromo_ad_history'; // User's ad history (session-based)
+export const SESSION_STORAGE_USERS_KEY = 'voxpromo_users'; // Simulated user database (session-based)
+export const SESSION_STORAGE_CURRENT_USER_KEY = 'voxpromo_current_user'; // Logged-in user (session-based)
 
-export const MAX_FREE_CREATIONS = 1; // Example limit for free plan
+export const MAX_FREE_CREATIONS = 1; // Limit for free plan
+
+// Mercado Pago API Keys (DANGER: Exposing ACCESS_TOKEN in frontend is INSECURE in production)
+// This token is kept here for demonstration purposes only, to allow the frontend to simulate
+// a backend interaction directly calling Mercado Pago API.
+// In a real application, this MUST be on a secure backend server, and NEVER exposed client-side.
+export const MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-543649172871662-110521-c419df4131b611ad6631746d303c262d-2932783245';
+export const MERCADO_PAGO_PUBLIC_KEY = 'APP_USR-1ad9971d-3308-4548-aad7-b76049fe6782';
+export const MERCADO_PAGO_ITEM_PRICE = 19.90; // Updated price as per user example
+export const MERCADO_PAGO_ITEM_TITLE = 'Plano Premium VoxPromo.ai (29 dias)';
+export const PREMIUM_DURATION_DAYS = 29; // Premium validity in days
+
+// Admin User Credentials (for frontend simulation only - session-based)
+export const ADMIN_EMAIL = 'voxpromo@nexussofttech.com.br';
+export const ADMIN_PASSWORD = 'admin157';
