@@ -1,5 +1,5 @@
 import { Handler, Context } from '@netlify/functions';
-import { AdHistoryItem } from '../../types'; // Adjust path as necessary
+import { AdHistoryItem } from '../../src/types'; // Adjust path as necessary
 
 // IMPORTANT: This is an IN-MEMORY store for demonstration.
 // Data WILL NOT persist across function invocations or cold starts.

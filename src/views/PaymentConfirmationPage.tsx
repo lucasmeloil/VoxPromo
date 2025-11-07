@@ -22,8 +22,8 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
   // Extract payment_id or collection_id/collection_status from URL query parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('payment_id') || urlParams.get('collection_id');
-    const collectionStatus = urlParams.get('collection_status'); // 'approved', 'pending', 'rejected'
+    const id = urlParams.get('payment_id') || urlParams.get('collection_id'); // Payment ID from MP
+    const collectionStatus = urlParams.get('collection_status') || urlParams.get('status'); // MP status: 'approved', 'pending', 'rejected'
 
     if (id) {
       setPaymentId(id);
@@ -31,25 +31,23 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
       if (collectionStatus === 'approved') {
         setStatus('approved');
         setMessage('Pagamento aprovado! Seu plano Premium está ativo!');
-        // No polling needed, directly update subscription
         if (currentUser) {
           updateUserSubscription(currentUser.id, new Date().toISOString()); // Use current date as approved date for frontend simulation
         } else {
-          setMessage('Pagamento aprovado, mas não foi possível ativar o plano Premium (usuário não logado na sessão).');
-          setStatus('error');
+          setMessage('Pagamento aprovado, mas não foi possível ativar o plano Premium (usuário não logado na sessão). Faça login para ver seu status premium.');
+          setStatus('error'); // Treat as error because user state couldn't be updated
         }
         onPaymentProcessed('success');
       } else if (collectionStatus === 'pending') {
         setStatus('pending');
         setMessage('Seu pagamento está pendente. Estamos aguardando a confirmação.');
-        // Initiate polling for pending status
-        // The useEffect below will handle initiating the pollPayment function
+        // Polling will be initiated by the useEffect below if status is 'pending'
       } else if (collectionStatus === 'rejected') {
         setStatus('rejected');
         setMessage('Seu pagamento foi recusado. Por favor, tente novamente ou use outro método de pagamento.');
         onPaymentProcessed('failure');
       } else {
-        // Unknown status, could be in_process, etc., or no status provided by MP. Initiate polling.
+        // Unknown status, could be 'in_process', etc., or no status provided by MP. Initiate polling.
         setStatus('loading');
         setMessage('Status do pagamento em processamento. Verificando...');
       }
@@ -72,7 +70,6 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
       return;
     }
 
-    // Only proceed if there's a logged-in user to update
     if (!currentUser) {
         setStatus('error');
         setMessage('Erro: Usuário não autenticado. Não foi possível ativar o plano Premium (sessão expirada ou não logada).');
@@ -93,7 +90,6 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
       } else if (mpStatus === 'pending') {
         setStatus('pending');
         setMessage('Seu pagamento está pendente. Estamos aguardando a confirmação.');
-        // Continue polling
         pollCountRef.current++;
         setTimeout(() => pollPayment(currentPaymentId), POLL_INTERVAL_MS);
       } else if (mpStatus === 'rejected') {
@@ -101,8 +97,7 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
         setMessage('Seu pagamento foi recusado. Por favor, tente novamente ou use outro método de pagamento.');
         onPaymentProcessed('failure');
       } else {
-        // Unknown status, could be in_process, etc.
-        setStatus('pending'); // Default to pending for ongoing statuses
+        setStatus('pending'); // Default to pending for ongoing statuses like 'in_process'
         setMessage(`Status do pagamento: ${mpStatus}. Estamos aguardando a confirmação.`);
         pollCountRef.current++;
         setTimeout(() => pollPayment(currentPaymentId), POLL_INTERVAL_MS);
@@ -116,12 +111,12 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
   }, [onPaymentProcessed, updateUserSubscription, currentUser, status]);
 
   useEffect(() => {
-    // Only start polling if paymentId is set AND status is not already final AND not initially approved
+    // Only start polling if paymentId is set AND status is 'loading' or 'pending'
     if (paymentId && (status === 'loading' || status === 'pending')) {
-      // FIX: The inner conditional check `(status === 'approved' || status === 'rejected')`
-      // was redundant and incorrect because the outer condition already ensures that `status`
-      // can only be 'loading' or 'pending'. This caused a type error. Removing the
-      // unnecessary check resolves the issue and correctly initiates polling.
+      // The outer `if` condition already ensures that `pollPayment` is only called when
+      // `status` is `'loading'` or `'pending'`. The `pollPayment` function itself
+      // also has an early exit for final states (`approved`, `rejected`, `error`).
+      // Thus, this redundant check is removed.
       pollPayment(paymentId);
     }
   }, [paymentId, status, pollPayment]);
@@ -162,16 +157,14 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
         </h2>
         <p className="text-gray-700 dark:text-gray-200 text-lg mb-6">{message}</p>
 
-        {(status === 'approved' || status === 'rejected' || status === 'error' || status === 'pending') && (
-          <button
-            onClick={() => onViewChange('profile')} // Always navigate to profile to show status
-            className="glowing-button relative inline-flex items-center justify-center p-0.5 overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800"
-          >
-            <span className="relative px-8 py-3 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-base md:text-lg font-bold">
-                Ir para o Perfil
-            </span>
-          </button>
-        )}
+        <button
+          onClick={() => onViewChange('profile')} // Always navigate to profile to show status
+          className="glowing-button relative inline-flex items-center justify-center p-0.5 overflow-hidden rounded-full group hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800"
+        >
+          <span className="relative px-8 py-3 transition-all ease-in duration-75 bg-gray-900 rounded-full group-hover:bg-opacity-0 text-base md:text-lg font-bold">
+              Ir para o Perfil
+          </span>
+        </button>
       </div>
     </div>
   );

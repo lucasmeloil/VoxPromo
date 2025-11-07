@@ -1,5 +1,5 @@
 import { Handler, Context } from '@netlify/functions';
-import { User } from '../../types'; // Adjust path as necessary
+import { User } from '../../src/types'; // Adjust path as necessary
 import bcrypt from 'bcryptjs';
 
 // IMPORTANT: This is an IN-MEMORY store for demonstration.
