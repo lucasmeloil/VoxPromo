@@ -113,10 +113,10 @@ const PaymentConfirmationPage: React.FC<PaymentConfirmationPageProps> = ({ onPay
   useEffect(() => {
     // Only start polling if paymentId is set AND status is 'loading' or 'pending'
     if (paymentId && (status === 'loading' || status === 'pending')) {
-      // Avoid starting polling if the status was already resolved by URL param (e.g., collection_status='approved')
-      if (status !== 'loading' && pollCountRef.current === 0) {
-          return;
-      }
+      // The outer `if` condition already ensures that `pollPayment` is only called when
+      // `status` is `'loading'` or `'pending'`. The `pollPayment` function itself
+      // also has an early exit for final states (`approved`, `rejected`, `error`).
+      // Thus, this redundant check is removed.
       pollPayment(paymentId);
     }
   }, [paymentId, status, pollPayment]);

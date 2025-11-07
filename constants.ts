@@ -41,10 +41,10 @@ export const MEDIA_TYPE_OPTIONS: MediaType[] = [
   MediaType.YOUTUBE,
 ];
 
-// Changed from localStorage to sessionStorage for session-based persistence
-export const SESSION_STORAGE_HISTORY_KEY = 'voxpromo_ad_history'; // User's ad history (session-based)
-export const SESSION_STORAGE_USERS_KEY = 'voxpromo_users'; // Simulated user database (session-based)
-export const SESSION_STORAGE_CURRENT_USER_KEY = 'voxpromo_current_user'; // Logged-in user (session-based)
+// Session storage keys are removed as data is now managed by backend
+// export const SESSION_STORAGE_HISTORY_KEY = 'voxpromo_ad_history';
+// export const SESSION_STORAGE_USERS_KEY = 'voxpromo_users';
+// export const SESSION_STORAGE_CURRENT_USER_KEY = 'voxpromo_current_user';
 
 export const MAX_FREE_CREATIONS = 1; // Limit for free plan
 
@@ -58,6 +58,6 @@ export const MERCADO_PAGO_ITEM_PRICE = 19.90; // Updated price as per user examp
 export const MERCADO_PAGO_ITEM_TITLE = 'Plano Premium VoxPromo.ai (29 dias)';
 export const PREMIUM_DURATION_DAYS = 29; // Premium validity in days
 
-// Admin User Credentials (for frontend simulation only - session-based)
-export const ADMIN_EMAIL = 'voxpromo@nexussofttech.com.br';
-export const ADMIN_PASSWORD = 'admin157';
+// Admin User Credentials (now managed by backend function logic, not client-side constants)
+// export const ADMIN_EMAIL = 'voxpromo@nexussofttech.com.br';
+// export const ADMIN_PASSWORD = 'admin157';

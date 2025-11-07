@@ -20,34 +20,37 @@ const AppContent: React.FC = () => {
   const [initialAdConfig, setInitialAdConfig] = useState<AdPromptConfig | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { addAdToHistory, history } = useAdHistory();
+  const { addAdToHistory, history } = useAdHistory(); // history will be fetched from backend via hook
 
   // Determine initial view based on URL path and authentication status
   useEffect(() => {
-    const path = window.location.pathname;
-    if (path === '/payment') {
-      setCurrentView('payment');
-    } else if (path === '/premium-confirmado') {
-      setCurrentView('premium-confirmado');
-    } else if (path === '/erro-pagamento') {
-      setCurrentView('erro-pagamento');
-    } else if (path === '/pagamento-pendente') {
-      setCurrentView('pagamento-pendente');
-    } else if (path === '/login') {
-      setCurrentView('login');
-    } else if (path === '/register') {
-      setCurrentView('register');
-    } else if (path === '/forgot-password') {
-      setCurrentView('forgot-password');
-    } else if (path === '/admin-panel') {
-      setCurrentView('admin-panel');
-    } else if (currentUser) {
-      // If user is logged in (session-based), default to 'create' or previous view
-      setCurrentView('create');
-    } else {
-      setCurrentView('landing');
+    // Only determine initial view once authentication status is loaded
+    if (!isLoadingAuth) {
+      const path = window.location.pathname;
+      if (path === '/payment') {
+        setCurrentView('payment');
+      } else if (path === '/premium-confirmado') {
+        setCurrentView('premium-confirmado');
+      } else if (path === '/erro-pagamento') {
+        setCurrentView('erro-pagamento');
+      } else if (path === '/pagamento-pendente') {
+        setCurrentView('pagamento-pendente');
+      } else if (path === '/login') {
+        setCurrentView('login');
+      } else if (path === '/register') {
+        setCurrentView('register');
+      } else if (path === '/forgot-password') {
+        setCurrentView('forgot-password');
+      } else if (path === '/admin-panel') {
+        setCurrentView('admin-panel');
+      } else if (currentUser) {
+        // If user is logged in, default to 'create' or previous view
+        setCurrentView('create');
+      } else {
+        setCurrentView('landing');
+      }
     }
-  }, [currentUser]); // Re-run when currentUser changes
+  }, [currentUser, isLoadingAuth]); // Re-run when currentUser or isLoadingAuth changes
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
@@ -89,8 +92,9 @@ const AppContent: React.FC = () => {
     setInitialAdConfig(null);
   }, []);
 
-  const handlePaymentProcessed = useCallback((status: 'success' | 'failure' | 'pending') => {
+  const handlePaymentProcessed = useCallback(async (status: 'success' | 'failure' | 'pending') => {
     console.log(`Payment processing complete with status: ${status}`);
+    await checkAuthStatus(); // Re-fetch user data to ensure premium status is up-to-date
     // Redirect user to an appropriate page after payment is processed
     if (status === 'success') {
       handleViewChange('profile'); // Or 'create'
@@ -99,7 +103,7 @@ const AppContent: React.FC = () => {
     } else {
       handleViewChange('profile'); // Show error on profile for now
     }
-  }, [handleViewChange]);
+  }, [handleViewChange, checkAuthStatus]);
 
   // Show loading spinner if auth status is being checked on initial load
   if (isLoadingAuth) {
