@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem } from '../types';
+import { AdHistoryItem } from '../types.js';
 import { historyApi } from '../services/apiService'; // Import the new API service
 import { useAuth } from '../contexts/AuthContext'; // To get current user id
 

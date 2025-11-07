@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { User, CurrentView } from '../types';
+import { User, CurrentView } from '../types.js';
 import {
   PREMIUM_DURATION_DAYS,
-} from '../constants';
+} from '../constants.js';
 import { authApi } from '../services/apiService'; // Import the new API service
 
 interface AuthContextType {

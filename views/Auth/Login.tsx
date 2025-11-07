@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { CurrentView } from '../../types';
+import { CurrentView } from '../../types.js';
 import { UserCircleIcon, LockClosedIcon, SparklesIcon, XCircleIcon, EnvelopeIcon, ArrowLeftIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 // import { GoogleIcon } from '../../components/Icons'; // Removed Google Icon
 

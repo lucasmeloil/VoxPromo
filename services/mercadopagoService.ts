@@ -3,8 +3,8 @@ import {
   MERCADO_PAGO_ITEM_PRICE,
   MERCADO_PAGO_ITEM_TITLE,
   MERCADO_PAGO_PUBLIC_KEY,
-} from '../constants';
-import { PaymentPreferenceResult, PaymentStatusResponse } from '../types';
+} from '../constants.js';
+import { PaymentPreferenceResult, PaymentStatusResponse } from '../types.js';
 
 // ====================================================================================================
 // IMPORTANT SECURITY WARNING:

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Cog6ToothIcon, StarIcon, ShieldCheckIcon, CreditCardIcon, UserCircleIcon, BuildingOfficeIcon } from '@heroicons/react/24/outline';
 import { useAdHistory } from '../hooks/useAdHistory';
 import { useAuth } from '../contexts/AuthContext'; // New import
-import { MAX_FREE_CREATIONS } from '../constants';
+import { MAX_FREE_CREATIONS } from '../constants.js';
 
 interface ProfileProps {
   isPremium: boolean;
