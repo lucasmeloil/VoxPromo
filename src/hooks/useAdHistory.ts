@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem } from '../types';
-import { SESSION_STORAGE_HISTORY_KEY } from '../constants';
+// fix: add file extensions to imports
+import { AdHistoryItem } from '../types.ts';
+import { historyApi } from '../services/apiService.ts'; // Import the new API service
+import { useAuth } from '../contexts/AuthContext.tsx'; // To get current user id
 
 interface UseAdHistoryReturn {
   history: AdHistoryItem[];
@@ -12,49 +14,81 @@ interface UseAdHistoryReturn {
 }
 
 export const useAdHistory = (): UseAdHistoryReturn => {
+  const { currentUser, isLoadingAuth } = useAuth();
   const [history, setHistory] = useState<AdHistoryItem[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [historyError, setHistoryError] = useState<string | null>(null);
 
-  // Load history from session storage on initial mount
-  useEffect(() => {
+  const fetchHistory = useCallback(async () => {
+    if (!currentUser) {
+      setHistory([]);
+      setIsLoadingHistory(false);
+      return;
+    }
+    setIsLoadingHistory(true);
+    setHistoryError(null);
     try {
-      const storedHistory = sessionStorage.getItem(SESSION_STORAGE_HISTORY_KEY);
-      if (storedHistory) {
-        setHistory(JSON.parse(storedHistory));
-      }
-    } catch (error) {
-      console.error("Failed to load history from session storage:", error);
-      setHistoryError("Failed to load history.");
+      const userHistory = await historyApi.getHistory();
+      setHistory(userHistory);
+    } catch (error: any) {
+      console.error("Falha ao buscar histórico do backend:", error);
+      setHistoryError(error.message || "Falha ao carregar histórico.");
+      setHistory([]); // Clear history on error or no user
     } finally {
       setIsLoadingHistory(false);
     }
-  }, []);
+  }, [currentUser]);
 
-  // Save history to session storage whenever it changes
+  // Fetch history when user changes or component mounts
   useEffect(() => {
-    try {
-      sessionStorage.setItem(SESSION_STORAGE_HISTORY_KEY, JSON.stringify(history));
-    } catch (error) {
-      console.error("Failed to save history to session storage:", error);
-      setHistoryError("Failed to save history.");
+    if (!isLoadingAuth) { // Only fetch if auth status is known
+        fetchHistory();
     }
-  }, [history]);
+  }, [currentUser, isLoadingAuth, fetchHistory]);
 
+  const addAdToHistory = useCallback(async (ad: AdHistoryItem) => {
+    if (!currentUser) {
+      setHistoryError("Usuário não autenticado para adicionar propaganda.");
+      return;
+    }
+    try {
+      const addedAd = await historyApi.addAd(ad);
+      setHistory(prevHistory => [...prevHistory, addedAd]);
+    } catch (error: any) {
+      console.error("Falha ao adicionar propaganda ao backend:", error);
+      setHistoryError(error.message || "Falha ao adicionar propaganda.");
+    }
+  }, [currentUser]);
 
-  const addAdToHistory = useCallback((ad: AdHistoryItem) => {
-    setHistory(prevHistory => [...prevHistory, ad]);
-  }, []);
+  const updateAdInHistory = useCallback(async (updatedAd: AdHistoryItem) => {
+    if (!currentUser) {
+      setHistoryError("Usuário não autenticado para atualizar propaganda.");
+      return;
+    }
+    try {
+      const responseAd = await historyApi.updateAd(updatedAd);
+      setHistory(prevHistory =>
+        prevHistory.map(ad => (ad.id === responseAd.id ? responseAd : ad))
+      );
+    } catch (error: any) {
+      console.error("Falha ao atualizar propaganda no backend:", error);
+      setHistoryError(error.message || "Falha ao atualizar propaganda.");
+    }
+  }, [currentUser]);
 
-  const updateAdInHistory = useCallback((updatedAd: AdHistoryItem) => {
-    setHistory(prevHistory =>
-      prevHistory.map(ad => (ad.id === updatedAd.id ? updatedAd : ad))
-    );
-  }, []);
-
-  const clearHistory = useCallback(() => {
-    setHistory([]);
-  }, []);
+  const clearHistory = useCallback(async () => {
+    if (!currentUser) {
+      setHistoryError("Usuário não autenticado para limpar histórico.");
+      return;
+    }
+    try {
+      await historyApi.clearHistory();
+      setHistory([]);
+    } catch (error: any) {
+      console.error("Falha ao limpar histórico no backend:", error);
+      setHistoryError(error.message || "Falha ao limpar histórico.");
+    }
+  }, [currentUser]);
 
   return { history, addAdToHistory, updateAdInHistory, clearHistory, isLoadingHistory, historyError };
 };

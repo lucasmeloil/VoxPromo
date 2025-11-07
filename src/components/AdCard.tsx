@@ -1,10 +1,12 @@
 import React from 'react';
-import { AdHistoryItem } from '../types';
-import AudioPlayer from './AudioPlayer'; // Keep for cases without background music
-import CombinedAudioPlayer from './CombinedAudioPlayer'; // New combined player
+// fix: add file extensions to imports
+import { AdHistoryItem } from '../types.ts';
+import AudioPlayer from './AudioPlayer.tsx'; // Keep for cases without background music
+import CombinedAudioPlayer from './CombinedAudioPlayer.tsx'; // New combined player
 import { HeartIcon, PencilIcon, DocumentDuplicateIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
-import { BACKGROUND_MUSIC_OPTIONS } from '../constants';
+// fix: add file extensions to imports
+import { BACKGROUND_MUSIC_OPTIONS } from '../constants.ts';
 
 interface AdCardProps {
   ad: AdHistoryItem;
