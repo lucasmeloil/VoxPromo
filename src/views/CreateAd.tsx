@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem, AdPromptConfig, Gender, ToneOption, MediaType, VoiceOption, GeneratedAdContent, BackgroundMusicOption } from '../types.js';
+import { AdHistoryItem, AdPromptConfig, Gender, ToneOption, MediaType, VoiceOption, GeneratedAdContent, BackgroundMusicOption } from '../types';
 import { generateAdContent, generateSpeech } from '../services/geminiService';
-import { VOICE_OPTIONS, TONE_OPTIONS, MEDIA_TYPE_OPTIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants.js';
+import { VOICE_OPTIONS, TONE_OPTIONS, MEDIA_TYPE_OPTIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants';
 import AudioPlayer from '../components/AudioPlayer';
 import CombinedAudioPlayer from '../components/CombinedAudioPlayer';
 import { SparklesIcon, XCircleIcon, CheckCircleIcon, RocketLaunchIcon } from '@heroicons/react/24/solid';

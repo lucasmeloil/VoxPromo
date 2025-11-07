@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bars3Icon, XMarkIcon, RocketLaunchIcon, ListBulletIcon } from '@heroicons/react/24/solid';
-import { CurrentView } from '../types.js';
+import { CurrentView } from '../types';
 
 interface NavItem {
   name: string;

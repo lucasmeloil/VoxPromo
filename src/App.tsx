@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Navbar from './components/Navbar';
 import CreateAd from './views/CreateAd';
 import History from './views/History';
-import { AdHistoryItem, CurrentView, AdPromptConfig } from './types.js';
+import { AdHistoryItem, CurrentView, AdPromptConfig } from './types';
 import { useAdHistory } from './hooks/useAdHistory';
 
 const App: React.FC = () => {

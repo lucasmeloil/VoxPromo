@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem } from '../types.js';
-import { SESSION_STORAGE_HISTORY_KEY } from '../constants.js';
+import { AdHistoryItem } from '../types';
+import { SESSION_STORAGE_HISTORY_KEY } from '../constants';
 
 interface UseAdHistoryReturn {
   history: AdHistoryItem[];
