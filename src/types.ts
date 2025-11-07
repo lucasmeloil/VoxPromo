@@ -64,28 +64,7 @@ export interface AdHistoryItem {
   isFavorite: boolean;
 }
 
-export type CurrentView = 'create' | 'history' | 'profile' | 'landing' | 'payment' | 'premium-confirmado' | 'erro-pagamento' | 'pagamento-pendente' | 'login' | 'register' | 'forgot-password' | 'admin-panel';
-
-export interface PaymentPreferenceResult {
-  preferenceId: string;
-  init_point: string;
-}
-
-export interface PaymentStatusResponse {
-  id: number;
-  status: string; // e.g., 'approved', 'pending', 'rejected'
-  date_approved: string; // ISO 8601 date string
-}
-
-export interface User {
-  id: string;
-  email: string;
-  password?: string; // Only for simulated local storage, NOT for production
-  isPremium: boolean;
-  premiumExpirationDate: string | null; // ISO string
-  creationCount: number;
-  isAdmin: boolean;
-}
+export type CurrentView = 'create' | 'history';
 
 declare global {
   interface Window {

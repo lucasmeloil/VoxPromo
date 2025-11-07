@@ -1,5 +1,7 @@
-import { User, AdHistoryItem, PaymentStatusResponse } from '../types.js';
-import { PREMIUM_DURATION_DAYS } from '../constants.js'; // For consistent logic
+// fix: remove .js extension from import
+import { User, AdHistoryItem, PaymentStatusResponse } from '../types';
+// fix: remove .js extension from import
+import { PREMIUM_DURATION_DAYS } from '../constants'; // For consistent logic
 
 const API_BASE_URL = '/.netlify/functions'; // Path to Netlify Functions
 

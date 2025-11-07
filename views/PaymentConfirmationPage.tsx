@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { checkPaymentStatus } from '../services/mercadopagoService';
 import { useAuth } from '../contexts/AuthContext';
 import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/solid';
-import { CurrentView } from '../types.js';
+// fix: remove .js extension from import
+import { CurrentView } from '../types';
 
 interface PaymentConfirmationPageProps {
   onPaymentProcessed: (status: 'success' | 'failure' | 'pending') => void;

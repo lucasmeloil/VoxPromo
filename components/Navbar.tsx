@@ -1,6 +1,7 @@
 import React from 'react';
 import { HomeIcon, ListBulletIcon, UserIcon, Bars3Icon, XMarkIcon, RocketLaunchIcon, ArrowRightOnRectangleIcon, KeyIcon, UserPlusIcon, BuildingOfficeIcon } from '@heroicons/react/24/solid';
-import { CurrentView } from '../types.js';
+// fix: remove .js extension from import
+import { CurrentView } from '../types';
 import { useAuth } from '../contexts/AuthContext'; // Import useAuth
 
 // Define a common base for navigation items

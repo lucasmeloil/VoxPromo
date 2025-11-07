@@ -1,11 +1,5 @@
 {
   "name": "VoxPromo - Gerador de Propagandas Musicais",
   "description": "Crie propagandas musicais personalizadas com voz e música integradas para rádio, TV e redes sociais, utilizando a IA Gemini.",
-  "requestFramePermissions": [],
-  "env": {
-    "ADMIN_PASSWORD": {
-      "description": "Password for the seeded admin user in Netlify Functions. FOR DEMO PURPOSES ONLY. In production, use a proper user management system.",
-      "value": "admin157"
-    }
-  }
+  "requestFramePermissions": []
 }

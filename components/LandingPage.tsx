@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { SparklesIcon, CheckCircleIcon, ArrowRightOnRectangleIcon, KeyIcon } from '@heroicons/react/24/solid';
 import { initializeMercadoPagoSDK } from '../services/mercadopagoService'; // createPaymentPreference will be called from PaymentPage
-import { MERCADO_PAGO_ITEM_PRICE } from '../constants.js';
+// fix: remove .js extension from import
+import { MERCADO_PAGO_ITEM_PRICE } from '../constants';
 import { useAuth } from '../contexts/AuthContext';
-import { CurrentView } from '../types.js';
+// fix: remove .js extension from import
+import { CurrentView } from '../types';
 
 interface LandingPageProps {
     onStartApp: () => void;

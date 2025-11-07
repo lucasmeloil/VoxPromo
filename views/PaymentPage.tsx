@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createPaymentPreference } from '../services/mercadopagoService';
-import { CurrentView } from '../types.js';
+// fix: remove .js extension from import
+import { CurrentView } from '../types';
 import { CreditCardIcon, SparklesIcon, XCircleIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 
 interface PaymentPageProps {

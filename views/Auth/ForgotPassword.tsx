@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { CurrentView } from '../../types.js';
+// fix: remove .js extension from import
+import { CurrentView } from '../../types';
 import { EnvelopeIcon, KeyIcon, XCircleIcon, CheckCircleIcon, ArrowLeftIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 
 interface ForgotPasswordProps {

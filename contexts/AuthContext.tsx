@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { User, CurrentView } from '../types.js';
+// fix: remove .js extension from import
+import { User, CurrentView } from '../types';
 import {
+// fix: remove .js extension from import
   PREMIUM_DURATION_DAYS,
-} from '../constants.js';
+} from '../constants';
 import { authApi } from '../services/apiService'; // Import the new API service
 
 interface AuthContextType {

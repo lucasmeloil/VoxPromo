@@ -10,7 +10,8 @@ import Login from './views/Auth/Login';
 import Register from './views/Auth/Register';
 import ForgotPassword from './views/Auth/ForgotPassword';
 import AdminPanel from './views/AdminPanel'; // New import for Admin Panel
-import { AdHistoryItem, CurrentView, AdPromptConfig } from './types.js';
+// fix: remove .js extension from import
+import { AdHistoryItem, CurrentView, AdPromptConfig } from './types';
 import { useAdHistory } from './hooks/useAdHistory';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 

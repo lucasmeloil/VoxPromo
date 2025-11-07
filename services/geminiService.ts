@@ -1,5 +1,6 @@
 import { GoogleGenAI, Modality, Type, GenerateContentResponse } from "@google/genai";
-import { GeneratedAdContent, GeminiVoiceName } from '../types.js';
+// fix: remove .js extension from import
+import { GeneratedAdContent, GeminiVoiceName } from '../types';
 
 /**
  * Encodes a Uint8Array to a base64 string.

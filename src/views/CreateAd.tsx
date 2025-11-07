@@ -1,24 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem, AdPromptConfig, Gender, ToneOption, MediaType, VoiceOption, GeneratedAdContent, BackgroundMusicOption } from '../types';
+import { AdHistoryItem, AdPromptConfig, Gender, ToneOption, MediaType, VoiceOption, GeneratedAdContent, BackgroundMusicOption } from '../types.js';
 import { generateAdContent, generateSpeech } from '../services/geminiService';
-import { VOICE_OPTIONS, TONE_OPTIONS, MEDIA_TYPE_OPTIONS, MAX_FREE_CREATIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants';
+import { VOICE_OPTIONS, TONE_OPTIONS, MEDIA_TYPE_OPTIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants.js';
 import AudioPlayer from '../components/AudioPlayer';
 import CombinedAudioPlayer from '../components/CombinedAudioPlayer';
 import { SparklesIcon, XCircleIcon, CheckCircleIcon, RocketLaunchIcon } from '@heroicons/react/24/solid';
-import { useAdHistory } from '../hooks/useAdHistory';
-import { useAuth } from '../contexts/AuthContext'; // New import
 
 interface CreateAdProps {
   onAdCreated: (ad: AdHistoryItem) => void;
   initialAdConfig?: AdPromptConfig | null;
   onClearInitialAdConfig: () => void;
-  isPremium: boolean; // Now comes from AuthContext
-  creationCount: number; // Now comes from AuthContext
 }
 
-const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig, isPremium, creationCount }) => {
-  const { incrementCreationCount } = useAuth(); // Get increment function from AuthContext
-
+const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onClearInitialAdConfig }) => {
   const [prompt, setPrompt] = useState('');
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(VOICE_OPTIONS[0].id);
   const [selectedTone, setSelectedTone] = useState<ToneOption>(TONE_OPTIONS[0]);
@@ -33,9 +27,6 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
 
   const selectedVoice = VOICE_OPTIONS.find(v => v.id === selectedVoiceId) || VOICE_OPTIONS[0];
   const selectedBackgroundMusic = BACKGROUND_MUSIC_OPTIONS.find(music => music.id === selectedBackgroundMusicId) || BACKGROUND_MUSIC_OPTIONS[0];
-  
-  // Free plan is limited ONLY if not premium
-  const isFreePlanLimited = !isPremium && creationCount >= MAX_FREE_CREATIONS;
 
   useEffect(() => {
     if (initialAdConfig) {
@@ -51,11 +42,6 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
   const handleSubmitInternal = useCallback(async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (isLoading) return;
-
-    if (isFreePlanLimited) {
-      setError('Você atingiu o limite de criações para o plano gratuito. Atualize para o Premium para criar ilimitadamente!');
-      return;
-    }
 
     setIsLoading(true);
     setError(null);
@@ -89,7 +75,6 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
         isFavorite: false,
       };
       onAdCreated(newAd);
-      incrementCreationCount(); // Increment count for current user
       setShowResult(true);
 
     } catch (err: any) {
@@ -98,7 +83,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, selectedTone, selectedMediaType, selectedVoiceId, selectedBackgroundMusicId, onAdCreated, isLoading, isFreePlanLimited, incrementCreationCount]);
+  }, [prompt, selectedTone, selectedMediaType, selectedVoice, selectedBackgroundMusicId, onAdCreated, isLoading]);
 
 
   const handleClear = useCallback(() => {
@@ -118,7 +103,7 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
     gender === Gender.FEMALE ? 'text-pink-500' : 'text-blue-500';
 
   return (
-    <div className="container mx-auto p-4 pt-20 min-h-screen">
+    <div className="container mx-auto p-4 pt-8 min-h-screen">
       <h2 className="text-3xl font-bold text-center text-purple-700 dark:text-yellow-400 mb-8 tracking-wide">
         Crie Sua Propaganda
       </h2>
@@ -229,8 +214,8 @@ const CreateAd: React.FC<CreateAdProps> = ({ onAdCreated, initialAdConfig, onCle
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             type="submit"
-            className={`btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center ${isLoading || isFreePlanLimited ? 'opacity-60 cursor-not-allowed' : ''}`}
-            disabled={isLoading || isFreePlanLimited}
+            className={`btn bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center ${isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+            disabled={isLoading}
           >
             {isLoading ? (
               <>

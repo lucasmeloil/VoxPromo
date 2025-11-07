@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { AdHistoryItem, AdPromptConfig, BackgroundMusicOption } from '../types.js';
+// fix: remove .js extension from import
+import { AdHistoryItem, AdPromptConfig, BackgroundMusicOption } from '../types';
 import AdCard from '../components/AdCard';
 import { FunnelIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useAdHistory } from '../hooks/useAdHistory';
-import { VoiceOption } from '../types.js';
-import { VOICE_OPTIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants.js';
+// fix: remove .js extension from import
+import { VoiceOption } from '../types';
+// fix: remove .js extension from import
+import { VOICE_OPTIONS, BACKGROUND_MUSIC_OPTIONS } from '../constants';
 
 interface HistoryProps {
   onEditAd: (config: AdPromptConfig) => void;

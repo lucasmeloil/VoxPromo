@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem } from '../types.js';
+// fix: remove .js extension from import
+import { AdHistoryItem } from '../types';
 import { historyApi } from '../services/apiService'; // Import the new API service
 import { useAuth } from '../contexts/AuthContext'; // To get current user id
 

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { AdHistoryItem } from '../types';
-import { historyApi } from '../services/apiService'; // Import the new API service
-import { useAuth } from '../contexts/AuthContext'; // To get current user id
+import { AdHistoryItem } from '../types.js';
+import { SESSION_STORAGE_HISTORY_KEY } from '../constants.js';
 
 interface UseAdHistoryReturn {
   history: AdHistoryItem[];
@@ -13,81 +12,49 @@ interface UseAdHistoryReturn {
 }
 
 export const useAdHistory = (): UseAdHistoryReturn => {
-  const { currentUser, isLoadingAuth } = useAuth();
   const [history, setHistory] = useState<AdHistoryItem[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [historyError, setHistoryError] = useState<string | null>(null);
 
-  const fetchHistory = useCallback(async () => {
-    if (!currentUser) {
-      setHistory([]);
-      setIsLoadingHistory(false);
-      return;
-    }
-    setIsLoadingHistory(true);
-    setHistoryError(null);
+  // Load history from session storage on initial mount
+  useEffect(() => {
     try {
-      const userHistory = await historyApi.getHistory();
-      setHistory(userHistory);
-    } catch (error: any) {
-      console.error("Falha ao buscar histórico do backend:", error);
-      setHistoryError(error.message || "Falha ao carregar histórico.");
-      setHistory([]); // Clear history on error or no user
+      const storedHistory = sessionStorage.getItem(SESSION_STORAGE_HISTORY_KEY);
+      if (storedHistory) {
+        setHistory(JSON.parse(storedHistory));
+      }
+    } catch (error) {
+      console.error("Failed to load history from session storage:", error);
+      setHistoryError("Failed to load history.");
     } finally {
       setIsLoadingHistory(false);
     }
-  }, [currentUser]);
+  }, []);
 
-  // Fetch history when user changes or component mounts
+  // Save history to session storage whenever it changes
   useEffect(() => {
-    if (!isLoadingAuth) { // Only fetch if auth status is known
-        fetchHistory();
-    }
-  }, [currentUser, isLoadingAuth, fetchHistory]);
-
-  const addAdToHistory = useCallback(async (ad: AdHistoryItem) => {
-    if (!currentUser) {
-      setHistoryError("Usuário não autenticado para adicionar propaganda.");
-      return;
-    }
     try {
-      const addedAd = await historyApi.addAd(ad);
-      setHistory(prevHistory => [...prevHistory, addedAd]);
-    } catch (error: any) {
-      console.error("Falha ao adicionar propaganda ao backend:", error);
-      setHistoryError(error.message || "Falha ao adicionar propaganda.");
+      sessionStorage.setItem(SESSION_STORAGE_HISTORY_KEY, JSON.stringify(history));
+    } catch (error) {
+      console.error("Failed to save history to session storage:", error);
+      setHistoryError("Failed to save history.");
     }
-  }, [currentUser]);
+  }, [history]);
 
-  const updateAdInHistory = useCallback(async (updatedAd: AdHistoryItem) => {
-    if (!currentUser) {
-      setHistoryError("Usuário não autenticado para atualizar propaganda.");
-      return;
-    }
-    try {
-      const responseAd = await historyApi.updateAd(updatedAd);
-      setHistory(prevHistory =>
-        prevHistory.map(ad => (ad.id === responseAd.id ? responseAd : ad))
-      );
-    } catch (error: any) {
-      console.error("Falha ao atualizar propaganda no backend:", error);
-      setHistoryError(error.message || "Falha ao atualizar propaganda.");
-    }
-  }, [currentUser]);
 
-  const clearHistory = useCallback(async () => {
-    if (!currentUser) {
-      setHistoryError("Usuário não autenticado para limpar histórico.");
-      return;
-    }
-    try {
-      await historyApi.clearHistory();
-      setHistory([]);
-    } catch (error: any) {
-      console.error("Falha ao limpar histórico no backend:", error);
-      setHistoryError(error.message || "Falha ao limpar histórico.");
-    }
-  }, [currentUser]);
+  const addAdToHistory = useCallback((ad: AdHistoryItem) => {
+    setHistory(prevHistory => [...prevHistory, ad]);
+  }, []);
+
+  const updateAdInHistory = useCallback((updatedAd: AdHistoryItem) => {
+    setHistory(prevHistory =>
+      prevHistory.map(ad => (ad.id === updatedAd.id ? updatedAd : ad))
+    );
+  }, []);
+
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+  }, []);
 
   return { history, addAdToHistory, updateAdInHistory, clearHistory, isLoadingHistory, historyError };
 };

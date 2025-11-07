@@ -41,23 +41,4 @@ export const MEDIA_TYPE_OPTIONS: MediaType[] = [
   MediaType.YOUTUBE,
 ];
 
-// Session storage keys are removed as data is now managed by backend
-// export const SESSION_STORAGE_HISTORY_KEY = 'voxpromo_ad_history';
-// export const SESSION_STORAGE_USERS_KEY = 'voxpromo_users';
-// export const SESSION_STORAGE_CURRENT_USER_KEY = 'voxpromo_current_user';
-
-export const MAX_FREE_CREATIONS = 1; // Limit for free plan
-
-// Mercado Pago API Keys (DANGER: Exposing ACCESS_TOKEN in frontend is INSECURE in production)
-// This token is kept here for demonstration purposes only, to allow the frontend to simulate
-// a backend interaction directly calling Mercado Pago API.
-// In a real application, this MUST be on a secure backend server, and NEVER exposed client-side.
-export const MERCADO_PAGO_ACCESS_TOKEN = 'APP_USR-543649172871662-110521-c419df4131b611ad6631746d303c262d-2932783245';
-export const MERCADO_PAGO_PUBLIC_KEY = 'APP_USR-1ad9971d-3308-4548-aad7-b76049fe6782';
-export const MERCADO_PAGO_ITEM_PRICE = 19.90; // Updated price as per user example
-export const MERCADO_PAGO_ITEM_TITLE = 'Plano Premium VoxPromo.ai (29 dias)';
-export const PREMIUM_DURATION_DAYS = 29; // Premium validity in days
-
-// Admin User Credentials (now managed by backend function logic, not client-side constants)
-// export const ADMIN_EMAIL = 'voxpromo@nexussofttech.com.br';
-// export const ADMIN_PASSWORD = 'admin157';
+export const SESSION_STORAGE_HISTORY_KEY = 'voxpromo_ad_history';
